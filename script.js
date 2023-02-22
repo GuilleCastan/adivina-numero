@@ -9,15 +9,13 @@ const guess = document.querySelector(".guess");
 const body = document.querySelector("body");
 
 // 2º Paso : Crear las variables de estado de la aplicación necesarias
-const MAX_NUMBER = 20;
-const MIN_NUMBER = 1;
-let secretNumber = Math.trunc(Math.random() * MAX_NUMBER) + MIN_NUMBER;
-let score = 20;
+let secretNumber;
+let score;
 let highScore = 0;
-console.log(secretNumber);
+fnInitApp();
 
 // 3º Paso : Crear los eventos y sus funciones
-againButton.addEventListener("click", function reset() {
+function fnInitApp() {
   secretNumber = Math.trunc(Math.random() * 20) + 1;
   score = 20;
   scoreField.textContent = score;
@@ -25,9 +23,10 @@ againButton.addEventListener("click", function reset() {
   message.textContent = `Start guesing...`;
   guess.value = "";
   body.style = "background-color: black";
+  checkButton.disabled = false;
   console.log(secretNumber);
-});
-
+}
+againButton.addEventListener("click", fnInitApp);
 checkButton.addEventListener("click", function comprobar() {
   let guessNumber = parseInt(guess.value);
 
@@ -37,6 +36,7 @@ checkButton.addEventListener("click", function comprobar() {
     showHighScore.textContent = highScore;
     numberShow.textContent = secretNumber;
     body.style = "background-color: green";
+    checkButton.disabled = true;
   } else {
     secretNumber > guessNumber
       ? (message.textContent = `Demasiado bajo`)
@@ -48,5 +48,6 @@ checkButton.addEventListener("click", function comprobar() {
   if (score == 0) {
     (message.textContent = `HAS PERDIDO`),
       (body.style = "background-color: red");
+    checkButton.disabled = true;
   }
 });

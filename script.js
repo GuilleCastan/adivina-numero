@@ -14,12 +14,14 @@ let highScore = 0;
 console.log(secretNumber);
 
 // 3º Paso : Crear los listeners
-
 againButton.addEventListener("click", function reset() {
   secretNumber = Math.trunc(Math.random() * 20) + 1;
   score = 20;
   scoreField.textContent = score;
   numberShow.textContent = "?";
+  message.textContent = `Start guesing...`;
+  guess.value = "";
+
   console.log(secretNumber);
 });
 
@@ -34,11 +36,11 @@ checkButton.addEventListener("click", function comprobar() {
     numberShow.textContent = secretNumber;
   } else if (secretNumber > guessNumber) {
     message.textContent = `Demasiado bajo`;
-    score = score - 2;
+    score -= 2;
     score < 0 ? (score = 0) : score;
   } else if (secretNumber < guessNumber) {
     message.textContent = `Demasiado alto`;
-    score = score - 2;
+    score -= 2;
     score < 0 ? (score = 0) : score;
   }
   scoreField.textContent = score;

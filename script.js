@@ -18,6 +18,10 @@ fnInitApp();
 function fnInitApp() {
   secretNumber = Math.trunc(Math.random() * 20) + 1;
   score = 20;
+  localStorage.getItem("highscore")
+    ? (highScore = localStorage.getItem("highscore"))
+    : (highScore = 0);
+  showHighScore.textContent = highScore;
   scoreField.textContent = score;
   numberShow.textContent = "?";
   message.textContent = `Start guesing...`;
@@ -25,6 +29,10 @@ function fnInitApp() {
   body.style = "background-color: black";
   checkButton.disabled = false;
   console.log(secretNumber);
+  console.log(
+    `La mejor puntuación guardada es ${(highScore =
+      localStorage.getItem("highscore"))}`
+  );
 }
 againButton.addEventListener("click", fnInitApp);
 checkButton.addEventListener("click", function comprobar() {
@@ -32,8 +40,10 @@ checkButton.addEventListener("click", function comprobar() {
 
   if (secretNumber == guessNumber) {
     message.textContent = `¡Has acertado!, el número es ${secretNumber}`;
-    highScore < score ? (highScore = score) : highScore;
-    showHighScore.textContent = highScore;
+    if (highScore < score) {
+      highScore = score;
+      localStorage.setItem("highscore", highScore);
+    }
     numberShow.textContent = secretNumber;
     body.style = "background-color: green";
     checkButton.disabled = true;

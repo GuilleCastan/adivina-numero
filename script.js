@@ -6,14 +6,17 @@ const numberShow = document.querySelector(".number");
 const message = document.querySelector(".message");
 const showHighScore = document.querySelector(".highscore");
 const guess = document.querySelector(".guess");
+const body = document.querySelector("body");
 
 // 2º Paso : Crear las variables de estado de la aplicación necesarias
-let secretNumber = Math.trunc(Math.random() * 20) + 1;
+const MAX_NUMBER = 20;
+const MIN_NUMBER = 1;
+let secretNumber = Math.trunc(Math.random() * MAX_NUMBER) + MIN_NUMBER;
 let score = 20;
 let highScore = 0;
 console.log(secretNumber);
 
-// 3º Paso : Crear los listeners
+// 3º Paso : Crear los eventos y sus funciones
 againButton.addEventListener("click", function reset() {
   secretNumber = Math.trunc(Math.random() * 20) + 1;
   score = 20;
@@ -21,7 +24,7 @@ againButton.addEventListener("click", function reset() {
   numberShow.textContent = "?";
   message.textContent = `Start guesing...`;
   guess.value = "";
-
+  body.style = "background-color: black";
   console.log(secretNumber);
 });
 
@@ -30,10 +33,10 @@ checkButton.addEventListener("click", function comprobar() {
 
   if (secretNumber == guessNumber) {
     message.textContent = `¡Has acertado!, el número es ${secretNumber}`;
-
     highScore < score ? (highScore = score) : highScore;
     showHighScore.textContent = highScore;
     numberShow.textContent = secretNumber;
+    body.style = "background-color: green";
   } else {
     secretNumber > guessNumber
       ? (message.textContent = `Demasiado bajo`)
@@ -42,4 +45,8 @@ checkButton.addEventListener("click", function comprobar() {
     score < 0 ? (score = 0) : score;
   }
   scoreField.textContent = score;
+  if (score == 0) {
+    (message.textContent = `HAS PERDIDO`),
+      (body.style = "background-color: red");
+  }
 });

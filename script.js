@@ -34,12 +34,10 @@ checkButton.addEventListener("click", function comprobar() {
     highScore < score ? (highScore = score) : highScore;
     showHighScore.textContent = highScore;
     numberShow.textContent = secretNumber;
-  } else if (secretNumber > guessNumber) {
-    message.textContent = `Demasiado bajo`;
-    score -= 2;
-    score < 0 ? (score = 0) : score;
-  } else if (secretNumber < guessNumber) {
-    message.textContent = `Demasiado alto`;
+  } else {
+    secretNumber > guessNumber
+      ? (message.textContent = `Demasiado bajo`)
+      : (message.textContent = `Demasiado alto`);
     score -= 2;
     score < 0 ? (score = 0) : score;
   }

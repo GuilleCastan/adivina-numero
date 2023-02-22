@@ -1,34 +1,45 @@
-//1º pasp: seleccionar, guardar y modficar los elementos del dom mediante el uso de variables.
+//1º Paso : seleccionar, guardar y modficar los elementos del dom mediante el uso de variables.
 const scoreField = document.querySelector(".score");
-scoreField.textContent = 10;
-
-let secretNumber = Math.trunc(Math.random() * 20) + 1;
-
 const checkButton = document.querySelector(".check");
-
-checkButton.addEventListener("click", function alerta() {
-  alert("hola mundo, soy el check");
-});
-
 const againButton = document.querySelector(".again");
-console.log(againButton);
+const numberShow = document.querySelector(".number");
+const message = document.querySelector(".message");
+const showHighScore = document.querySelector(".highscore");
+const guess = document.querySelector(".guess");
 
-againButton.addEventListener("click", function alerta() {
-  alert("hola mundo, soy el btn again");
+// 2º Paso : Crear las variables de estado de la aplicación necesarias
+let secretNumber = Math.trunc(Math.random() * 20) + 1;
+let score = 20;
+let highScore = 0;
+console.log(secretNumber);
+
+// 3º Paso : Crear los listeners
+
+againButton.addEventListener("click", function reset() {
+  secretNumber = Math.trunc(Math.random() * 20) + 1;
+  score = 20;
+  scoreField.textContent = score;
+  numberShow.textContent = "?";
+  console.log(secretNumber);
 });
 
-//Pillamso y comprobamos el número
-const numberShow = document.querySelector(".number");
-console.log(numberShow);
+checkButton.addEventListener("click", function comprobar() {
+  let guessNumber = parseInt(guess.value);
 
-//Pillamos y comprobamos el mensaje
-const message = document.querySelector(".message");
-console.log(message);
+  if (secretNumber == guessNumber) {
+    message.textContent = `¡Has acertado!, el número es ${secretNumber}`;
 
-//Pillamos y comprobamos el score máximo
-const highScore = document.querySelector(".highscore");
-console.log(highScore);
-
-//Pillamos y comprobamos el número que creemos que es
-const guess = document.querySelector(".guess");
-console.log(guess);
+    highScore < score ? (highScore = score) : highScore;
+    showHighScore.textContent = highScore;
+    numberShow.textContent = secretNumber;
+  } else if (secretNumber > guessNumber) {
+    message.textContent = `Demasiado bajo`;
+    score = score - 2;
+    score < 0 ? (score = 0) : score;
+  } else if (secretNumber < guessNumber) {
+    message.textContent = `Demasiado alto`;
+    score = score - 2;
+    score < 0 ? (score = 0) : score;
+  }
+  scoreField.textContent = score;
+});

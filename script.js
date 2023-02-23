@@ -7,6 +7,7 @@ const message = document.querySelector(".message");
 const showHighScore = document.querySelector(".highscore");
 const guess = document.querySelector(".guess");
 const body = document.querySelector("body");
+const deleteButton = document.querySelector(".delete");
 
 // 2º Paso : Crear las variables de estado de la aplicación necesarias
 let secretNumber;
@@ -39,10 +40,11 @@ checkButton.addEventListener("click", function comprobar() {
   let guessNumber = parseInt(guess.value);
 
   if (secretNumber == guessNumber) {
-    message.textContent = `¡Has acertado!, el número es ${secretNumber}`;
+    message.textContent = `¡Has acertado!`;
     if (highScore < score) {
       highScore = score;
       localStorage.setItem("highscore", highScore);
+      showHighScore.textContent = highScore;
     }
     numberShow.textContent = secretNumber;
     body.style = "background-color: green";
@@ -56,8 +58,14 @@ checkButton.addEventListener("click", function comprobar() {
   }
   scoreField.textContent = score;
   if (score == 0) {
-    (message.textContent = `HAS PERDIDO`),
+    (message.textContent = `¡Has perdido!`),
       (body.style = "background-color: red");
+    numberShow.textContent = secretNumber;
     checkButton.disabled = true;
   }
+});
+
+deleteButton.addEventListener("click", function deleteHighscore() {
+  localStorage.removeItem("highscore");
+  showHighScore.textContent = 0;
 });
